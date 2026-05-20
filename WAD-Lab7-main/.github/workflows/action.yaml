@@ -3,8 +3,8 @@ name: Lab 7
 on:
   push:
     branches:
-      - test # Triggers only on push to the "test" branch
-  pull_request: # Triggers on all pull requests
+      - test
+  pull_request:
 
 jobs:
   test:
