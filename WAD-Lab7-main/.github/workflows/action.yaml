@@ -1,0 +1,36 @@
+name: Lab 7
+
+on:
+  push:
+    branches:
+      - test # Triggers only on push to the "test" branch
+  pull_request: # Triggers on all pull requests
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Grant execute permission for Gradle Wrapper
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        # '-x test' skips tests during the build phase so they don't run twice
+        run: ./gradlew build -x test
+
+      - name: Run backend tests
+        run: ./gradlew test
+        env:
+          # Reads the secret from GitHub and injects it as an environment variable
+          ENVIRONMENT_TEST_SECRET: ${{ secrets.ENVIRONMENT_TEST_SECRET }}
+
+      - name: Run Jacoco report
+        run: ./gradlew jacocoTestReport
