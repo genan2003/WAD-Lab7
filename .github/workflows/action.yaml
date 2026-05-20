@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT_TEST_SECRET: ${{ secrets.MY_SECRET_KEY }}
 
     steps:
       - uses: actions/checkout@v4
@@ -27,8 +29,6 @@ jobs:
 
       - name: Run backend tests
         run: ./gradlew test
-        env:
-          ENVIRONMENT_TEST_SECRET: ${{ secrets.ENVIRONMENT_TEST_SECRET }}
 
       - name: Run Jacoco report
         run: ./gradlew jacocoTestReport
