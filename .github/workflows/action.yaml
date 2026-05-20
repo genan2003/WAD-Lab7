@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT_TEST_SECRET: ${{ secrets.MY_SECRET_KEY }}
+      MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
 
     steps:
       - uses: actions/checkout@v4
